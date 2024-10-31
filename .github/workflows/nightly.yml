@@ -64,8 +64,8 @@ jobs:
           cp $KUAYUE_RELEASE "./artifacts/"
 
       - name: Upload Artifact to Github
-        uses: xresloader/upload-to-github-release@v1
+        uses: actions/upload-artifact@v4.4.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "./artifacts/*.jar"
+          path: "./artifacts/*.jar"
