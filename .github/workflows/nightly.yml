@@ -77,7 +77,7 @@ jobs:
           
           cp $KUAYUE_RELEASE "./artifacts/"
 
-          NIGHTLY_VERSIONS='{"kasugalib":{"version":"${KASUGA_VERSION}","download":"/artifacts/nightly/kasuga_lib-${KASUGA_VERSION}.jar","commit":"${KASUGA_COMMIT}"},"kuayue":{"version":"${KUAYUE_VERSION}","download":"/artifacts/nightly/kuayue-${KUAYUE_VERSION}.jar","commit":"${KUAYUE_COMMIT}"}}'
+          NIGHTLY_VERSIONS='{"kasugalib":{"version":"'${KASUGA_VERSION}'","download":"/artifacts/nightly/kasuga_lib-'${KASUGA_VERSION}'.jar","commit":"'${KASUGA_COMMIT}'"},"kuayue":{"version":"'${KUAYUE_VERSION}'","download":"/artifacts/nightly/kuayue-'${KUAYUE_VERSION}'.jar","commit":"'${KUAYUE_COMMIT}'"}}'
           
           echo $NIGHTLY_VERSIONS >> ./artifacts/build-info.json
 
