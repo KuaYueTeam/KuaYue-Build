@@ -21,7 +21,7 @@ jobs:
         with:
           repository: 'KasugaLibGroup/NeoKuaYue'
           ref: 'master'
-          path: 'KuaYue'
+          path: 'kuayue'
           
       - name: Setup Java
         uses: actions/setup-java@v4.5.0
