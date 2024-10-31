@@ -47,8 +47,8 @@ jobs:
           mkdir ./artifacts/
           DATE_NUMBER="$(TZ='Asia/Shanghai' date +'%y%m%d')"
 
-          KASUGA_COMMIT = $(git --git-dir ./kasugalib/.git rev-parse HEAD)
-          KUAYUE_COMMIT = $(git --git-dir ./kuayue/.git rev-parse --short HEAD)
+          KASUGA_COMMIT=$(git --git-dir ./kasugalib/.git rev-parse HEAD)
+          KUAYUE_COMMIT=$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
           KASUGA_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
           KUAYUE_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
