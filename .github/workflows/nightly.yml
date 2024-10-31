@@ -43,13 +43,22 @@ jobs:
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE}.jar"
+
+          cd ./kasugalib
           
-          ./gradlew :kasugalib:build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION"
+          ./gradlew :build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION"
+
+          cd ..
           
           cp $KASUGA_RELEASE "./artifacts/"
           cp $KASUGA_RELEASE $KASUGA_RELEASE_LIB
 
-          ./gradlew :kuayue:build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION"
+          cd ./kuayue
+
+          ./gradlew build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION"
+
+          cd ..
+          
           cp $KUAYUE_RELEASE "./artifacts/"
 
       - name: Upload Artifact to Github
