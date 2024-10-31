@@ -1,0 +1,60 @@
+name: Build Nightly
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout KasugaLib Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'KasugaLibGroup/KasugaLib'
+          ref: '1.19.2-create'
+          path: 'kasugalib'
+          
+      - name: Checkout KuaYue Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'KasugaLibGroup/NeoKuaYue'
+          ref: 'master'
+          path: 'KuaYue'
+          
+      - name: Setup Java
+        uses: actions/setup-java@v4.5.0
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+          cache: 'gradle'
+          
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+      - name: Build
+        run: |
+          rm -r -f ./artifacts 2> /dev/null
+          mkdir ./artifacts/
+          KASUGA_VERSION=1.19.2-nightly-create-$(git --git-dir .\kasugalib\.git rev-parse --short HEAD)
+          KUAYUE_VERSION=1.19.2-nightly-create-$(git --git-dir .\kuayue\.git rev-parse --short HEAD)
+          
+          KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
+          KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
+          KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE}.jar"
+          
+          ./gradlew :kasugalib:build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION"
+          
+          cp $KASUGA_RELEASE "./artifacts/"
+          cp $KASUGA_RELEASE $KASUGA_RELEASE_LIB
+
+          ./gradlew :kuayue:build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION"
+          cp $KUAYUE_RELEASE "./artifacts/"
+
+      - name: Upload Artifact to Github
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "./artifacts/*.jar"
