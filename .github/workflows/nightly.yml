@@ -48,7 +48,7 @@ jobs:
           DATE_NUMBER="$(TZ='Asia/Shanghai' date +'%y%m%d')"
 
           KASUGA_COMMIT = $(git --git-dir ./kasugalib/.git rev-parse HEAD)
-          KUAYUE_COMMIT = git --git-dir ./kuayue/.git rev-parse --short HEAD
+          KUAYUE_COMMIT = $(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
           KASUGA_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
           KUAYUE_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
@@ -56,7 +56,7 @@ jobs:
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE_VERSION}.jar"
-          echo "Output Version: " >> $GITHUB_STEP_SUMMARY
+          echo "## Output Versions: " >> $GITHUB_STEP_SUMMARY
           echo "KuaYue: $KUAYUE_VERSION @ $KUAYUE_COMMIT" >> $GITHUB_STEP_SUMMARY
           echo "KasugaLib: $KASUGA_VERSION @ $KASUGA_COMMIT" >> $GITHUB_STEP_SUMMARY
 
