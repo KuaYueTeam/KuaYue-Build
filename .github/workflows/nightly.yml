@@ -38,7 +38,7 @@ jobs:
       - name: Set UTC+8 Asia/Shanghai TimeZone
         run: |
           TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          echo "Build At: $TIME" >> $GITHUB_ENV
+          echo "Build At: $TIME" >> $GITHUB_STEP_SUMMARY
 
       
       - name: Build
@@ -56,10 +56,9 @@ jobs:
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE_VERSION}.jar"
-
-          echo "Output Version: " >> $GITHUB_ENV
-          echo "KuaYue: $KUAYUE_VERSION @ $KUAYUE_COMMIT" >> $GITHUB_ENV
-          echo "KasugaLib: $KASUGA_VERSION @ $KASUGA_COMMIT" >> $GITHUB_ENV
+          echo "Output Version: " >> $GITHUB_STEP_SUMMARY
+          echo "KuaYue: $KUAYUE_VERSION @ $KUAYUE_COMMIT" >> $GITHUB_STEP_SUMMARY
+          echo "KasugaLib: $KASUGA_VERSION @ $KASUGA_COMMIT" >> $GITHUB_STEP_SUMMARY
 
           cd ./kasugalib
           
