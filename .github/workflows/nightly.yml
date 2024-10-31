@@ -37,8 +37,8 @@ jobs:
         run: |
           rm -r -f ./artifacts 2> /dev/null
           mkdir ./artifacts/
-          KASUGA_VERSION=1.19.2-nightly-create-$(git --git-dir .\kasugalib\.git rev-parse --short HEAD)
-          KUAYUE_VERSION=1.19.2-nightly-create-$(git --git-dir .\kuayue\.git rev-parse --short HEAD)
+          KASUGA_VERSION=1.19.2-nightly-create-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
+          KUAYUE_VERSION=1.19.2-nightly-create-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
