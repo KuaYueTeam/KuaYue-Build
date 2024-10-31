@@ -44,7 +44,7 @@ jobs:
           
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
-          KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE}.jar"
+          KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE_VERSION}.jar"
 
           cd ./kasugalib
           
