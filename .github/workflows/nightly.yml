@@ -48,7 +48,7 @@ jobs:
 
           cd ./kasugalib
           
-          ./gradlew :build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION"
+          ./gradlew build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION"
 
           cd ..
           
