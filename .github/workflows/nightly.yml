@@ -35,16 +35,31 @@ jobs:
         with:
           gradle-version: "7.5.1"
 
+      - name: Set UTC+8 Asia/Shanghai TimeZone
+        run: |
+          TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          echo "Build At: $TIME" >> $GITHUB_ENV
+
+      
       - name: Build
         run: |
           rm -r -f ./artifacts 2> /dev/null
           mkdir ./artifacts/
-          KASUGA_VERSION=1.19.2-nightly-create-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
-          KUAYUE_VERSION=1.19.2-nightly-create-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
+          DATE_NUMBER="$(TZ='Asia/Shanghai' date +'%y%m%d')"
+
+          KASUGA_COMMIT = $(git --git-dir ./kasugalib/.git rev-parse HEAD)
+          KUAYUE_COMMIT = git --git-dir ./kuayue/.git rev-parse --short HEAD
+          
+          KASUGA_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
+          KUAYUE_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KUAYUE_RELEASE="./kuayue/build/libs/kuayue-${KUAYUE_VERSION}.jar"
+
+          echo "Output Version: " >> $GITHUB_ENV
+          echo "KuaYue: $KUAYUE_VERSION @ $KUAYUE_COMMIT" >> $GITHUB_ENV
+          echo "KasugaLib: $KASUGA_VERSION @ $KASUGA_COMMIT" >> $GITHUB_ENV
 
           cd ./kasugalib
           
