@@ -34,13 +34,21 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
         with:
           gradle-version: "7.5.1"
+          
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.1.0
 
       - name: Set UTC+8 Asia/Shanghai TimeZone
         run: |
           TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
           echo "Build At: $TIME" >> $GITHUB_STEP_SUMMARY
 
-      
+      - name: Build KasugaLib Javascript Runtime
+        run: |
+          cd ./kasugalib
+          yarn
+          yarn build
+          
       - name: Build
         run: |
           rm -r -f ./artifacts 2> /dev/null
