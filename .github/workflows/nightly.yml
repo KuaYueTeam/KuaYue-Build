@@ -82,6 +82,14 @@ jobs:
 
           cd ./kuayue
 
+          cd ./scripts/
+          
+          yarn install
+
+          yarn tsx ./build.ts
+
+          cd ..
+
           ./gradlew build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION"
 
           cd ..
