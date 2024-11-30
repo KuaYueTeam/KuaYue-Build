@@ -52,6 +52,16 @@ jobs:
           cd ./kasugalib
           yarn
           yarn build
+
+          cd ..
+          cd ./kuayue
+          corepack enable
+          cd ./scripts/
+          yarn install
+          yarn tsx ./build.ts
+          corepack disable
+          cd ..
+          
           
       - name: Build
         run: |
@@ -82,14 +92,6 @@ jobs:
           cp $KASUGA_RELEASE $KASUGA_RELEASE_LIB
 
           cd ./kuayue
-
-          cd ./scripts/
-          
-          yarn install
-
-          yarn tsx ./build.ts
-
-          cd ..
 
           ./gradlew build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION"
 
