@@ -52,8 +52,9 @@ jobs:
           cd ./kasugalib
           yarn
           yarn build
-
           cd ..
+      - name: Build KuaYue Javascript Code Pack
+        run: |    
           cd ./kuayue
           corepack enable
           cd ./scripts/
