@@ -23,6 +23,7 @@ jobs:
           repository: 'KasugaLibGroup/NeoKuaYue'
           ref: 'master'
           path: 'kuayue'
+          submodules: true
           
       - name: Setup Java
         uses: actions/setup-java@v4.5.0
