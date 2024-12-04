@@ -50,12 +50,14 @@ jobs:
       - name: Build KasugaLib Javascript Runtime
         run: |
           cd ./kasugalib
+          rm ./src/generated/resources/script/ -r -f
           yarn
           yarn build
           cd ..
       - name: Build KuaYue Javascript Code Pack
         run: |    
           cd ./kuayue
+          rm ./src/generated/resources/script/ -r -f
           corepack enable
           cd ./scripts/
           yarn install
