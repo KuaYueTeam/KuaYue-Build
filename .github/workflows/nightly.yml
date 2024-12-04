@@ -50,6 +50,7 @@ jobs:
       - name: Build KasugaLib Javascript Runtime
         run: |
           cd ./kasugalib
+          git submodule update --remote --recursive
           rm ./src/generated/resources/script/ -r -f
           yarn
           yarn build
@@ -57,6 +58,7 @@ jobs:
       - name: Build KuaYue Javascript Code Pack
         run: |    
           cd ./kuayue
+          git submodule update --remote --recursive
           rm ./src/generated/resources/script/ -r -f
           corepack enable
           cd ./scripts/
