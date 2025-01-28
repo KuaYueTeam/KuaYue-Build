@@ -90,6 +90,7 @@ jobs:
           cd ./kasugalib
           
           ./gradlew build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION" -Pnightly=true
+          ./gradlew publishAllPublicationsToGradleCIMavenRepository -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION" -Pnightly=true -PkuaYueTeamGradleCiToken="$KUAYUE_TEAM_GITEA_ACCESS_TOKEN"
 
           cd ..
           
@@ -99,6 +100,7 @@ jobs:
           cd ./kuayue
 
           ./gradlew build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION" -Pnightly=true
+          ./gradlew publishAllPublicationsToGradleCIMavenRepository -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION" -Pnightly=true -PkuaYueTeamGradleCiToken="$KUAYUE_TEAM_GITEA_ACCESS_TOKEN"
 
           cd ..
           
