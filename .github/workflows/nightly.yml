@@ -69,6 +69,8 @@ jobs:
           
           
       - name: Build
+        env:
+          KUAYUE_TEAM_GITEA_ACCESS_TOKEN: ${{ secrets.KUAYUE_TEAM_GITEA_ACCESS_TOKEN }}
         run: |
           rm -r -f ./artifacts 2> /dev/null
           mkdir ./artifacts/
