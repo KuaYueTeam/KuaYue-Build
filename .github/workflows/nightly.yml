@@ -74,7 +74,7 @@ jobs:
         run: |
           rm -r -f ./artifacts 2> /dev/null
           mkdir ./artifacts/
-          DATE_NUMBER="$(TZ='Asia/Shanghai' date +'%y%m%d')"
+          DATE_NUMBER="$(TZ='Asia/Shanghai' date +'%y%m%d-%H_%M')"
 
           KASUGA_COMMIT=$(git --git-dir ./kasugalib/.git rev-parse HEAD)
           KUAYUE_COMMIT=$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
