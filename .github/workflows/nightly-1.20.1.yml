@@ -1,4 +1,4 @@
-name: Build Nightly for Minecraft 1.19.2
+name: Build Nightly for Minecraft 1.20.1
 on:
   schedule:
     - cron: "0 22 * * *"
@@ -79,8 +79,8 @@ jobs:
           KASUGA_COMMIT=$(git --git-dir ./kasugalib/.git rev-parse HEAD)
           KUAYUE_COMMIT=$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
-          KASUGA_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
-          KUAYUE_VERSION=1.19.2-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
+          KASUGA_VERSION=1.20.1-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kasugalib/.git rev-parse --short HEAD)
+          KUAYUE_VERSION=1.20.1-nightly-create-${DATE_NUMBER}-$(git --git-dir ./kuayue/.git rev-parse --short HEAD)
           
           KASUGA_RELEASE="./kasugalib/build/libs/kasuga_lib-${KASUGA_VERSION}.jar"
           KASUGA_RELEASE_LIB="./kuayue/libs/kasuga_lib-${KASUGA_VERSION}.jar"
@@ -91,6 +91,8 @@ jobs:
 
           cd ./kasugalib
           
+          git checkout 1.20.1-create-2
+
           ./gradlew build -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION" -Pnightly=true
           ./gradlew publishAllPublicationsToGradleCIMavenRepository -Pmod_version="$KASUGA_VERSION" -PjarVersion="$KASUGA_VERSION" -Pnightly=true -PkuaYueTeamGradleCiToken="$KUAYUE_TEAM_GITEA_ACCESS_TOKEN"
 
@@ -101,6 +103,8 @@ jobs:
 
           cd ./kuayue
 
+          git checkout 1.20.1-dev
+
           ./gradlew build -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION" -Pnightly=true
           ./gradlew publishAllPublicationsToGradleCIMavenRepository -Pmod_version="$KUAYUE_VERSION" -PjarVersion="$KUAYUE_VERSION" -Pkasuga_lib_version="$KASUGA_VERSION" -Pnightly=true -PkuaYueTeamGradleCiToken="$KUAYUE_TEAM_GITEA_ACCESS_TOKEN"
 
@@ -108,17 +112,17 @@ jobs:
           
           cp $KUAYUE_RELEASE "./artifacts/"
 
-          NIGHTLY_VERSIONS='{"kasugalib":{"version":"'${KASUGA_VERSION}'","download":"/artifacts/nightly/kasuga_lib-'${KASUGA_VERSION}'.jar","commit":"'${KASUGA_COMMIT}'"},"kuayue":{"version":"'${KUAYUE_VERSION}'","download":"/artifacts/nightly/kuayue-'${KUAYUE_VERSION}'.jar","commit":"'${KUAYUE_COMMIT}'"}}'
+      #     NIGHTLY_VERSIONS='{"kasugalib":{"version":"'${KASUGA_VERSION}'","download":"/artifacts/nightly/kasuga_lib-'${KASUGA_VERSION}'.jar","commit":"'${KASUGA_COMMIT}'"},"kuayue":{"version":"'${KUAYUE_VERSION}'","download":"/artifacts/nightly/kuayue-'${KUAYUE_VERSION}'.jar","commit":"'${KUAYUE_COMMIT}'"}}'
           
-          echo $NIGHTLY_VERSIONS >> ./artifacts/build-info.json
+      #     echo $NIGHTLY_VERSIONS >> ./artifacts/build-info.json
 
-      - name: Upload Artifact to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with: 
-          server: ${{ secrets.KUAYUE_UPLOAD_SERVER }}
-          username: uploader
-          password: ${{ secrets.KUAYUE_UPLOAD_PASSWORD }}
-          local-dir: ./artifacts/
-          server-dir: ./nightly/
+      # - name: Upload Artifact to FTP Server
+      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      #   with: 
+      #     server: ${{ secrets.KUAYUE_UPLOAD_SERVER }}
+      #     username: uploader
+      #     password: ${{ secrets.KUAYUE_UPLOAD_PASSWORD }}
+      #     local-dir: ./artifacts/
+      #     server-dir: ./nightly/
           
       
